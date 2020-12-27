@@ -85,6 +85,14 @@ export default {
                     commit('setRegisterError', error.response.data.errors);
                 }
             }
+        },
+        async logoutInApp({commit, dispatch}, payload) {
+            try {
+                commit('logout');
+                await axios.post(`${process.env.MIX_APP_URL}/api/v1/auth/logout`);
+            }catch (error) {
+                commit('error', error);
+            }
         }
     }
 }

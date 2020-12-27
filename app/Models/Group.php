@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as MediaModel;
@@ -95,5 +96,18 @@ class Group extends Model implements HasMedia
     public function users()
     {
         return $this->belongsToMany(User::class, 'group_user')->withPivot('role_id')->withTimestamps();
+    }
+
+    /**
+     * @param User $user
+     * @return mixed
+     */
+    public function hasUser(User $user)
+    {
+        if ($this->users->find($user->id)) {
+            return true;
+        }
+
+        return false;
     }
 }

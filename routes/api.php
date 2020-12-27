@@ -35,6 +35,8 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function () {
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
 
     Route::group(['middleware' => 'auth:api'], function () {
+        Route::post('groups/unsubscribe', [GroupController::class, 'unSubscribe']);
+        Route::post('groups/subscribe', [GroupController::class, 'subscribe']);
         Route::get('groups/search', [GroupController::class, 'searchGroup']);
         Route::apiResource('groups', GroupController::class);
         Route::apiResource('groups.events', EventController::class)->shallow();

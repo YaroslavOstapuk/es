@@ -1,6 +1,7 @@
 <template>
     <div class="event">
-        <v-row>
+        <loader v-if="loader"></loader>
+        <v-row v-else>
             <v-col
                 md="6"
                 cols="12"
@@ -64,6 +65,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 export default {
     data: () => ({
         loading: false,
+        loader: false,
         form: {
             name: null,
             description: null,
@@ -72,9 +74,11 @@ export default {
         }
     }),
     async mounted() {
+        this.loader = true;
         await this.fetchMenuGroup(this.$route.params.slug);
         this.setAppBarTitle('Добавити подію');
         this.clearCreateButtonInfo();
+        this.loader = false;
     },
     computed: {
         ...mapGetters({
@@ -99,6 +103,11 @@ export default {
             })
 
             if (event) {
+                this.$toast.open('Подія успішно створена!', {
+                    position: 'top-right',
+                    type: 'success'
+                });
+
                 this.$router.push({
                     name: 'eventsEdit',
                     params: {

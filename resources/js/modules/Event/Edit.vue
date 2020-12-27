@@ -1,6 +1,7 @@
 <template>
     <div class="event">
-        <v-row>
+        <loader v-if="loader"></loader>
+        <v-row v-else>
             <v-col
                 md="6"
                 cols="12"
@@ -64,6 +65,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 export default {
     data: () => ({
         loading: false,
+        loader: false,
         form: {
             _method: 'PUT',
             name: null,
@@ -73,6 +75,7 @@ export default {
         }
     }),
     async mounted() {
+        this.loader = true;
         await this.fetchMenuGroup(this.$route.params.slug);
         this.setAppBarTitle('Редагувати подію');
         this.clearCreateButtonInfo();
@@ -83,6 +86,7 @@ export default {
         this.form.description = event.data.description;
         this.form.start_at = event.data.start_at;
         this.form.expire_at = event.data.expire_at;
+        this.loader = false;
     },
     computed: {
         ...mapGetters({
@@ -106,6 +110,11 @@ export default {
                 id: this.$route.params.id,
                 data: this.form
             })
+
+            this.$toast.open({
+                message: 'Дані оновлено!',
+                type: 'info',
+            });
 
             this.loading = false;
         }

@@ -73,12 +73,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       questions: [],
-      slug: null
+      slug: null,
+      loader: false
     };
   },
   mounted: function mounted() {
@@ -90,16 +92,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              _this.loader = true;
               slug = _this.$route.params.slug;
               _this.slug = slug;
-              _context.next = 4;
+              _context.next = 5;
               return _this.fetchMenuGroup(slug);
 
-            case 4:
-              _context.next = 6;
+            case 5:
+              _context.next = 7;
               return _this.getQuestions(slug);
 
-            case 6:
+            case 7:
               questions = _context.sent;
 
               if (questions) {
@@ -117,7 +120,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
               });
 
-            case 11:
+              _this.loader = false;
+
+            case 13:
             case "end":
               return _context.stop();
           }
@@ -225,92 +230,103 @@ var render = function() {
     "div",
     { staticClass: "group" },
     [
-      _c(
-        "v-row",
-        [
-          _c(
-            "v-col",
-            { attrs: { cols: "12" } },
+      _vm.loader
+        ? _c("loader")
+        : _c(
+            "v-row",
             [
               _c(
-                "v-card",
+                "v-col",
+                { attrs: { cols: "12" } },
                 [
                   _c(
-                    "v-list",
-                    { attrs: { "two-line": "" } },
+                    "v-card",
                     [
-                      _vm._l(_vm.questions, function(question, index) {
-                        return [
-                          index != 0
-                            ? _c("v-divider", { attrs: { inset: true } })
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c(
-                            "v-list-item",
-                            {
-                              key: index,
-                              attrs: {
-                                to: {
-                                  name: "questionsShow",
-                                  params: {
-                                    slug: _vm.slug,
-                                    id: question.id
+                      _c(
+                        "v-list",
+                        { attrs: { "two-line": "" } },
+                        [
+                          _vm._l(_vm.questions, function(question, index) {
+                            return [
+                              index != 0
+                                ? _c("v-divider", { attrs: { inset: true } })
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c(
+                                "v-list-item",
+                                {
+                                  key: index,
+                                  attrs: {
+                                    to: {
+                                      name: "questionsShow",
+                                      params: {
+                                        slug: _vm.slug,
+                                        id: question.id
+                                      }
+                                    },
+                                    link: "",
+                                    exact: ""
                                   }
                                 },
-                                link: "",
-                                exact: ""
-                              }
-                            },
-                            [
-                              _c("v-list-item-avatar"),
-                              _vm._v(" "),
-                              _c(
-                                "v-list-item-content",
                                 [
-                                  _c("v-list-item-title", {
-                                    domProps: {
-                                      innerHTML: _vm._s(question.title)
-                                    }
-                                  }),
+                                  _c("v-list-item-avatar"),
                                   _vm._v(" "),
-                                  _c("v-list-item-subtitle", {
-                                    domProps: {
-                                      innerHTML: _vm._s(question.descriptions)
-                                    }
-                                  })
+                                  _c(
+                                    "v-list-item-content",
+                                    [
+                                      _c("v-list-item-title", {
+                                        domProps: {
+                                          innerHTML: _vm._s(question.title)
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("v-list-item-subtitle", {
+                                        domProps: {
+                                          innerHTML: _vm._s(
+                                            question.descriptions
+                                          )
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-item-action",
+                                    {
+                                      staticClass: "mr-10 question-status",
+                                      class: _vm.colorStatus(question.status)
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                        " +
+                                          _vm._s(
+                                            _vm.getMessageStatus(
+                                              question.status
+                                            )
+                                          ) +
+                                          "\n                    "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-list-item-action",
+                                    [
+                                      _c("v-icon", [_vm._v("mdi-message-text")])
+                                    ],
+                                    1
+                                  )
                                 ],
                                 1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-list-item-action",
-                                {
-                                  staticClass: "mr-10 question-status",
-                                  class: _vm.colorStatus(question.status)
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                        " +
-                                      _vm._s(
-                                        _vm.getMessageStatus(question.status)
-                                      ) +
-                                      "\n                    "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-list-item-action",
-                                [_c("v-icon", [_vm._v("mdi-message-text")])],
-                                1
                               )
-                            ],
-                            1
-                          )
-                        ]
-                      })
+                            ]
+                          })
+                        ],
+                        2
+                      )
                     ],
-                    2
+                    1
                   )
                 ],
                 1
@@ -318,9 +334,6 @@ var render = function() {
             ],
             1
           )
-        ],
-        1
-      )
     ],
     1
   )

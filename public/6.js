@@ -89,13 +89,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       events: [],
-      slug: null
+      slug: null,
+      loading: false
     };
   },
   mounted: function mounted() {
@@ -107,15 +109,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              _this.loading = true;
               _this.slug = _this.$route.params.slug;
-              _context.next = 3;
+              _context.next = 4;
               return _this.fetchMenuGroup(_this.slug);
 
-            case 3:
-              _context.next = 5;
+            case 4:
+              _context.next = 6;
               return _this.getEvents(_this.slug);
 
-            case 5:
+            case 6:
               events = _context.sent;
 
               if (events) {
@@ -133,7 +136,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
               });
 
-            case 10:
+              _this.loading = false;
+
+            case 12:
             case "end":
               return _context.stop();
           }
@@ -162,7 +167,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 events = _context2.sent;
                 _this2.events = events.data;
 
-              case 6:
+                _this2.$toast.open({
+                  message: 'Подія видалена!',
+                  type: 'default'
+                });
+
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -198,138 +208,144 @@ var render = function() {
     "div",
     { staticClass: "group" },
     [
-      _c(
-        "v-row",
-        [
-          _c(
-            "v-col",
-            { attrs: { cols: "12" } },
-            _vm._l(_vm.events, function(event) {
-              return _vm.events
-                ? _c(
-                    "v-alert",
-                    {
-                      key: event.id,
-                      attrs: {
-                        type:
-                          new Date(event.expire_at) < new Date()
-                            ? "error"
-                            : "success",
-                        prominent: ""
-                      }
-                    },
-                    [
-                      _c(
-                        "v-row",
-                        {
-                          staticClass: "text-center",
-                          attrs: { align: "center" }
-                        },
-                        [
-                          _c("v-col", { staticClass: "grow" }, [
-                            _c("div", [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(event.name) +
-                                  "\n                        "
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(event.description) +
-                                  "\n                        "
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("v-col", { staticClass: "grow" }, [
-                            _c("div", [
-                              _c("div", [_vm._v("Дата початку:")]),
-                              _vm._v(" "),
-                              _c("div", [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(_vm.format(event.start_at)) +
-                                    "\n                            "
+      _vm.loading
+        ? _c("loader")
+        : _c(
+            "v-row",
+            [
+              _c(
+                "v-col",
+                { attrs: { cols: "12" } },
+                [
+                  !_vm.events.length
+                    ? _c("h3", { staticClass: "text-center mt-15" }, [
+                        _vm._v(
+                          "\n                Важливих подій поки не має!\n            "
+                        )
+                      ])
+                    : _vm._l(_vm.events, function(event) {
+                        return _c(
+                          "v-alert",
+                          {
+                            key: event.id,
+                            attrs: {
+                              type:
+                                new Date(event.expire_at) < new Date()
+                                  ? "error"
+                                  : "success",
+                              prominent: ""
+                            }
+                          },
+                          [
+                            _c(
+                              "v-row",
+                              {
+                                staticClass: "text-center",
+                                attrs: { align: "center" }
+                              },
+                              [
+                                _c("v-col", { staticClass: "grow" }, [
+                                  _c("div", [
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(event.name) +
+                                        "\n                        "
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", [
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(event.description) +
+                                        "\n                        "
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("v-col", { staticClass: "grow" }, [
+                                  _c("div", [
+                                    _c("div", [_vm._v("Дата початку:")]),
+                                    _vm._v(" "),
+                                    _c("div", [
+                                      _vm._v(
+                                        "\n                                " +
+                                          _vm._s(_vm.format(event.start_at)) +
+                                          "\n                            "
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("v-col", { staticClass: "grow" }, [
+                                  _c("div", [
+                                    _c("div", [_vm._v("Дата завершення:")]),
+                                    _vm._v(" "),
+                                    _c("div", [
+                                      _vm._v(
+                                        "\n                                " +
+                                          _vm._s(_vm.format(event.expire_at)) +
+                                          "\n                            "
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "v-col",
+                                  { staticClass: "d-flex flex-row" },
+                                  [
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        attrs: {
+                                          to: {
+                                            name: "eventsEdit",
+                                            params: {
+                                              slug: _vm.slug,
+                                              id: event.id
+                                            }
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                            Редагувати\n                        "
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        staticClass: "ml-2",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.remove(event.id)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                            Видалити\n                        "
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
                                 )
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("v-col", { staticClass: "grow" }, [
-                            _c("div", [
-                              _c("div", [_vm._v("Дата завершення:")]),
-                              _vm._v(" "),
-                              _c("div", [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(_vm.format(event.expire_at)) +
-                                    "\n                            "
-                                )
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { staticClass: "d-flex flex-row" },
-                            [
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: {
-                                    to: {
-                                      name: "eventsEdit",
-                                      params: {
-                                        slug: _vm.slug,
-                                        id: event.id
-                                      }
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                            Редагувати\n                        "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  staticClass: "ml-2",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.remove(event.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                            Видалити\n                        "
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                : _c("span", [
-                    _vm._v("\n                Подій поки не має!\n            ")
-                  ])
-            }),
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      })
+                ],
+                2
+              )
+            ],
             1
           )
-        ],
-        1
-      )
     ],
     1
   )

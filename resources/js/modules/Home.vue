@@ -13,7 +13,7 @@
             </div>
             <div class="main-content">
                 <h1 class="main-content__text">
-                    Easy Study - сайт для легкого навчання
+                    Easy Study - сайт для легкого спілкування
                 </h1>
                 <register></register>
             </div>
@@ -27,12 +27,18 @@
 <script>
 import Login from "../components/Modals/Login";
 import Register from "../components/Modals/Register"
+import { getLocalUser } from '../helpers/auth'
 
 export default {
     components: {
         Login,
         Register
-    }
+    },
+    mounted() {
+        if (getLocalUser()) {
+            this.$router.push({ name: 'groups' });
+        }
+    },
 }
 </script>
 
@@ -64,6 +70,7 @@ body {
 }
 .main-points {
     width: 100%;
+    height: 100vh;
     position: absolute;
     top: 50%;
     right: 50%;

@@ -328,6 +328,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Modals_Login__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Modals/Login */ "./resources/js/components/Modals/Login.vue");
 /* harmony import */ var _components_Modals_Register__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Modals/Register */ "./resources/js/components/Modals/Register.vue");
+/* harmony import */ var _helpers_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/auth */ "./resources/js/helpers/auth.js");
 //
 //
 //
@@ -354,12 +355,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Login: _components_Modals_Login__WEBPACK_IMPORTED_MODULE_0__["default"],
     Register: _components_Modals_Register__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  mounted: function mounted() {
+    if (Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_2__["getLocalUser"])()) {
+      this.$router.push({
+        name: 'groups'
+      });
+    }
   }
 });
 
@@ -377,7 +386,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nbody[data-v-86ca2af6] {\n    background: #fbe5ee;\n}\n.main[data-v-86ca2af6] {\n    height: 100vh;\n    position: relative;\n    background: #fbe5ee;\n}\n.main-book[data-v-86ca2af6] {\n    width: 60%;\n    position: absolute;\n    bottom: 0;\n    right: 50%;\n    transform: translateX(50%);\n    z-index: 900;\n}\n.main-circle[data-v-86ca2af6] {\n    width: 100%;\n    max-width: 700px;\n    position: absolute;\n    bottom: 0;\n    right: 50%;\n    transform: translateX(50%);\n    z-index: 950;\n}\n.main-points[data-v-86ca2af6] {\n    width: 100%;\n    position: absolute;\n    top: 50%;\n    right: 50%;\n    transform: translate(50%, -50%);\n    z-index: 960;\n}\n.main-header[data-v-86ca2af6], .main-content[data-v-86ca2af6] {\n    z-index: 1000;\n    position: relative;\n}\n.main-wrapper[data-v-86ca2af6] {\n    width: 100%;\n    max-width: 1920px;\n    margin: 0 auto;\n}\n.main-header[data-v-86ca2af6] {\n    padding: 20px;\n    display: flex;\n    justify-content: space-between;\n}\n.main-header__logo img[data-v-86ca2af6]{\n    position: relative;\n    z-index: 1020;\n    width: 70%;\n}\n.main-content[data-v-86ca2af6] {\n    margin-top: 70px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n}\n.main-content__text[data-v-86ca2af6] {\n    margin-bottom: 30px;\n}\n@media screen and (max-width: 480px) {\n.main-header[data-v-86ca2af6] {\n        flex-direction: column;\n        align-items: center;\n}\n.main-header__logo img[data-v-86ca2af6] {\n        width: 100%;\n}\n.main-header__product[data-v-86ca2af6] {\n        margin-top: 20px;\n}\n.main-content__text[data-v-86ca2af6] {\n        text-align: center;\n}\n.main-book[data-v-86ca2af6] {\n        width: 150%;\n}\n.main[data-v-86ca2af6] {\n        overflow: hidden;\n}\n}\n", ""]);
+exports.push([module.i, "\nbody[data-v-86ca2af6] {\n    background: #fbe5ee;\n}\n.main[data-v-86ca2af6] {\n    height: 100vh;\n    position: relative;\n    background: #fbe5ee;\n}\n.main-book[data-v-86ca2af6] {\n    width: 60%;\n    position: absolute;\n    bottom: 0;\n    right: 50%;\n    transform: translateX(50%);\n    z-index: 900;\n}\n.main-circle[data-v-86ca2af6] {\n    width: 100%;\n    max-width: 700px;\n    position: absolute;\n    bottom: 0;\n    right: 50%;\n    transform: translateX(50%);\n    z-index: 950;\n}\n.main-points[data-v-86ca2af6] {\n    width: 100%;\n    height: 100vh;\n    position: absolute;\n    top: 50%;\n    right: 50%;\n    transform: translate(50%, -50%);\n    z-index: 960;\n}\n.main-header[data-v-86ca2af6], .main-content[data-v-86ca2af6] {\n    z-index: 1000;\n    position: relative;\n}\n.main-wrapper[data-v-86ca2af6] {\n    width: 100%;\n    max-width: 1920px;\n    margin: 0 auto;\n}\n.main-header[data-v-86ca2af6] {\n    padding: 20px;\n    display: flex;\n    justify-content: space-between;\n}\n.main-header__logo img[data-v-86ca2af6]{\n    position: relative;\n    z-index: 1020;\n    width: 70%;\n}\n.main-content[data-v-86ca2af6] {\n    margin-top: 70px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n}\n.main-content__text[data-v-86ca2af6] {\n    margin-bottom: 30px;\n}\n@media screen and (max-width: 480px) {\n.main-header[data-v-86ca2af6] {\n        flex-direction: column;\n        align-items: center;\n}\n.main-header__logo img[data-v-86ca2af6] {\n        width: 100%;\n}\n.main-header__product[data-v-86ca2af6] {\n        margin-top: 20px;\n}\n.main-content__text[data-v-86ca2af6] {\n        text-align: center;\n}\n.main-book[data-v-86ca2af6] {\n        width: 150%;\n}\n.main[data-v-86ca2af6] {\n        overflow: hidden;\n}\n}\n", ""]);
 
 // exports
 
@@ -874,7 +883,7 @@ var render = function() {
         [
           _c("h1", { staticClass: "main-content__text" }, [
             _vm._v(
-              "\n                Easy Study - сайт для легкого навчання\n            "
+              "\n                Easy Study - сайт для легкого спілкування\n            "
             )
           ]),
           _vm._v(" "),

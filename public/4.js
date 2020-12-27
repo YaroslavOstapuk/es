@@ -85,12 +85,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       loading: false,
+      loader: false,
       form: {
         name: null,
         description: null,
@@ -107,15 +109,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              _this.loader = true;
+              _context.next = 3;
               return _this.fetchMenuGroup(_this.$route.params.slug);
 
-            case 2:
+            case 3:
               _this.setAppBarTitle('Добавити подію');
 
               _this.clearCreateButtonInfo();
 
-            case 4:
+              _this.loader = false;
+
+            case 6:
             case "end":
               return _context.stop();
           }
@@ -147,6 +152,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 event = _context2.sent;
 
                 if (event) {
+                  _this2.$toast.open('Подія успішно створена!', {
+                    position: 'top-right',
+                    type: 'success'
+                  });
+
                   _this2.$router.push({
                     name: 'eventsEdit',
                     params: {
@@ -190,128 +200,135 @@ var render = function() {
     "div",
     { staticClass: "event" },
     [
-      _c(
-        "v-row",
-        [
-          _c(
-            "v-col",
-            { attrs: { md: "6", cols: "12" } },
+      _vm.loader
+        ? _c("loader")
+        : _c(
+            "v-row",
             [
-              _c("v-text-field", {
-                attrs: {
-                  label: "Назва події",
-                  "error-messages": _vm.errors ? _vm.errors.name : ""
-                },
-                model: {
-                  value: _vm.form.name,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "name", $$v)
-                  },
-                  expression: "form.name"
-                }
-              }),
-              _vm._v(" "),
-              _c("v-text-field", {
-                attrs: {
-                  label: "Короткий опис події",
-                  "error-messages": _vm.errors ? _vm.errors.description : ""
-                },
-                model: {
-                  value: _vm.form.description,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "description", $$v)
-                  },
-                  expression: "form.description"
-                }
-              }),
-              _vm._v(" "),
               _c(
-                "v-datetime-picker",
-                {
-                  attrs: {
-                    label: "Дата та час початку події",
-                    errors: _vm.errors ? _vm.errors.start_at : ""
-                  },
-                  model: {
-                    value: _vm.form.start_at,
-                    callback: function($$v) {
-                      _vm.$set(_vm.form, "start_at", $$v)
-                    },
-                    expression: "form.start_at"
-                  }
-                },
+                "v-col",
+                { attrs: { md: "6", cols: "12" } },
                 [
-                  _c(
-                    "template",
-                    { slot: "dateIcon" },
-                    [_c("v-icon", [_vm._v("fas fa-calendar")])],
-                    1
-                  ),
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Назва події",
+                      "error-messages": _vm.errors ? _vm.errors.name : ""
+                    },
+                    model: {
+                      value: _vm.form.name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "name", $$v)
+                      },
+                      expression: "form.name"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Короткий опис події",
+                      "error-messages": _vm.errors ? _vm.errors.description : ""
+                    },
+                    model: {
+                      value: _vm.form.description,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "description", $$v)
+                      },
+                      expression: "form.description"
+                    }
+                  }),
                   _vm._v(" "),
                   _c(
-                    "template",
-                    { slot: "timeIcon" },
-                    [_c("v-icon", [_vm._v("fas fa-clock")])],
-                    1
-                  )
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "v-datetime-picker",
-                {
-                  attrs: {
-                    label: "Дата та час кінця події",
-                    errors: _vm.errors ? _vm.errors.expire_at : ""
-                  },
-                  model: {
-                    value: _vm.form.expire_at,
-                    callback: function($$v) {
-                      _vm.$set(_vm.form, "expire_at", $$v)
-                    },
-                    expression: "form.expire_at"
-                  }
-                },
-                [
-                  _c(
-                    "template",
-                    { slot: "dateIcon" },
-                    [_c("v-icon", [_vm._v("fas fa-calendar")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "template",
-                    { slot: "timeIcon" },
-                    [_c("v-icon", [_vm._v("fas fa-clock")])],
-                    1
-                  )
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "btn-store d-flex justify-end" },
-                [
-                  _c(
-                    "v-btn",
+                    "v-datetime-picker",
                     {
                       attrs: {
-                        tile: "",
-                        color: "success",
-                        loading: _vm.loading
+                        label: "Дата та час початку події",
+                        errors: _vm.errors ? _vm.errors.start_at : ""
                       },
-                      on: { click: _vm.addEvent }
+                      model: {
+                        value: _vm.form.start_at,
+                        callback: function($$v) {
+                          _vm.$set(_vm.form, "start_at", $$v)
+                        },
+                        expression: "form.start_at"
+                      }
                     },
                     [
-                      _c("v-icon", { attrs: { left: "" } }, [
-                        _vm._v(
-                          "\n                        mdi-pencil\n                    "
-                        )
-                      ]),
-                      _vm._v("\n                    Створити\n                ")
+                      _c(
+                        "template",
+                        { slot: "dateIcon" },
+                        [_c("v-icon", [_vm._v("fas fa-calendar")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "template",
+                        { slot: "timeIcon" },
+                        [_c("v-icon", [_vm._v("fas fa-clock")])],
+                        1
+                      )
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-datetime-picker",
+                    {
+                      attrs: {
+                        label: "Дата та час кінця події",
+                        errors: _vm.errors ? _vm.errors.expire_at : ""
+                      },
+                      model: {
+                        value: _vm.form.expire_at,
+                        callback: function($$v) {
+                          _vm.$set(_vm.form, "expire_at", $$v)
+                        },
+                        expression: "form.expire_at"
+                      }
+                    },
+                    [
+                      _c(
+                        "template",
+                        { slot: "dateIcon" },
+                        [_c("v-icon", [_vm._v("fas fa-calendar")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "template",
+                        { slot: "timeIcon" },
+                        [_c("v-icon", [_vm._v("fas fa-clock")])],
+                        1
+                      )
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "btn-store d-flex justify-end" },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: {
+                            tile: "",
+                            color: "success",
+                            loading: _vm.loading
+                          },
+                          on: { click: _vm.addEvent }
+                        },
+                        [
+                          _c("v-icon", { attrs: { left: "" } }, [
+                            _vm._v(
+                              "\n                        mdi-pencil\n                    "
+                            )
+                          ]),
+                          _vm._v(
+                            "\n                    Створити\n                "
+                          )
+                        ],
+                        1
+                      )
                     ],
                     1
                   )
@@ -321,9 +338,6 @@ var render = function() {
             ],
             1
           )
-        ],
-        1
-      )
     ],
     1
   )

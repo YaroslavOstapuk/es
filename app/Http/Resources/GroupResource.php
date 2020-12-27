@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class GroupResource extends JsonResource
 {
@@ -19,6 +20,7 @@ class GroupResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'slug' => $this->slug,
+            'is_subscribers' => $this->hasUser(Auth::user()),
             'main_photo' => $this->getAllConversions('main_photo'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

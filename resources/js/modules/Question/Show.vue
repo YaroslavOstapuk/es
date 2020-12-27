@@ -39,7 +39,7 @@
                             </div>
                         </template>
                     </v-card-text>
-                    <v-card-text class="flex-shrink-1">
+                    <v-col cols="8" sm="5" class="d-flex">
                         <v-text-field
                             v-model="message.text"
                             clear-icon="mdi-close-circle"
@@ -54,7 +54,12 @@
                             multiple
                             truncate-length="15"
                         ></v-file-input>
-                    </v-card-text>
+                        <v-btn>
+                            <v-icon>
+                                mdi-send
+                            </v-icon>
+                        </v-btn>
+                    </v-col>
                 </v-card>
             </v-responsive>
         </v-col>
@@ -62,6 +67,8 @@
 </template>
 
 <script>
+import {mapActions, mapMutations} from 'vuex'
+
 export default {
     data: () => ({
         messages: [
@@ -70,42 +77,26 @@ export default {
                 me: true,
                 created_at: "11:11am"
             },
-            {
-                content: "dolor",
-                me: false,
-                created_at: "11:11am"
-            },
-            {
-                content: "dolor",
-                me: false,
-                created_at: "11:11am"
-            },
-            {
-                content: "dolor",
-                me: false,
-                created_at: "11:11am"
-            },
-            {
-                content: "dolor",
-                me: true,
-                created_at: "11:11am"
-            },
-            {
-                content: "dolor",
-                me: false,
-                created_at: "11:12am"
-            },
-            {
-                content: "dolor",
-                me: false,
-                created_at: "11:14am"
-            }
         ],
         message: {
             text: "",
         }
     }),
+    async mounted() {
+        await this.fetchMenuGroup();
+        this.setAppBarTitle('Новини');
+        this.setCreateButtonTitle('Добавити групу');
+        this.setCreateButtonUrl({
+            name: 'groupsAdd'
+        });
+    },
     methods: {
+        ...mapActions(['fetchMenuGroup']),
+        ...mapMutations([
+            'setAppBarTitle',
+            'setCreateButtonTitle',
+            'setCreateButtonUrl'
+        ]),
         clearMessage() {
             this.message.text = ''
         },
@@ -122,8 +113,5 @@ export default {
     height: auto !important;
     white-space: normal;
     max-width: 400px;
-}
-.container {
-    padding: 0px;
 }
 </style>

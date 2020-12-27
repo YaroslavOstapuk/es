@@ -49,6 +49,33 @@ export default {
             } catch (error) {
                 commit('error', error);
             }
+        },
+        async searchGroup({commit, dispatch}, payload) {
+            try {
+                let groups = await axios.get(`${process.env.MIX_APP_URL}/api/v1/groups/search?q=${payload}`);
+
+                return groups.data;
+            }catch (error) {
+                commit('error', error);
+            }
+        },
+        async subscribeToGroup({commit, dispatch}, payload) {
+            try {
+                let subscribe = await axios.post(`${process.env.MIX_APP_URL}/api/v1/groups/subscribe`, payload);
+
+                return subscribe.data;
+            }catch (error) {
+                commit('error', error);
+            }
+        },
+        async unsubscribeFromGroup({commit, dispatch}, payload) {
+            try {
+                let unsubscribe = await axios.post(`${process.env.MIX_APP_URL}/api/v1/groups/unsubscribe`, payload);
+
+                return unsubscribe.data;
+            }catch (error) {
+                commit('error', error);
+            }
         }
     },
 }

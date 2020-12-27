@@ -18,6 +18,12 @@ export const routes = [
         component: () => import('./modules/Group/Add.vue')
     },
     {
+        path: '/groups/search',
+        name: 'groupsSearch',
+        meta: {layout: 'main'},
+        component: () => import('./modules/Group/Search.vue')
+    },
+    {
         path: '/groups/:slug',
         name: 'groupsShow',
         meta: {layout: 'main'},

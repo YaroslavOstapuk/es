@@ -1,6 +1,7 @@
 <template>
     <div class="group">
-        <v-row>
+        <loader v-if="loader"></loader>
+        <v-row v-else>
             <v-col
             cols="12"
             >
@@ -54,8 +55,10 @@ export default {
     data: () => ({
         questions: [],
         slug: null,
+        loader: false,
     }),
     async mounted() {
+        this.loader = true;
         let slug = this.$route.params.slug;
         this.slug = slug;
 
@@ -74,6 +77,7 @@ export default {
                 slug: slug
             }
         });
+        this.loader = false;
     },
     methods: {
         ...mapActions([

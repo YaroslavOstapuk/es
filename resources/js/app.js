@@ -9,13 +9,18 @@ import Vuex from 'vuex';
 import StoreDate from "./store";
 import App from  './modules/App';
 import DatetimePicker from './components/DatetimePicker';
+import Loader from "./components/Loader";
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 import {setCommonHeaders} from './store/axiosConfig';
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(Vuetify);
+Vue.use(VueToast);
 
 Vue.component('v-datetime-picker', DatetimePicker);
+Vue.component('loader', Loader);
 
 const store = new Vuex.Store(StoreDate);
 

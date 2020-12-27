@@ -1,11 +1,15 @@
 <template>
     <div class="group">
-        <v-row>
+        <loader v-if="loading"></loader>
+        <v-row v-else>
             <v-col
                 cols="12"
             >
+                <h3 v-if="!events.length" class="text-center mt-15">
+                    Важливих подій поки не має!
+                </h3>
                 <v-alert
-                    v-if="events"
+                    v-else
                     v-for="event in events"
                     :type="new Date(event.expire_at) < new Date() ? 'error' : 'success'"
                     prominent
@@ -54,9 +58,6 @@
                         </v-col>
                     </v-row>
                 </v-alert>
-                <span v-else>
-                    Подій поки не має!
-                </span>
             </v-col>
         </v-row>
     </div>
@@ -70,8 +71,11 @@ export default {
     data: () => ({
         events: [],
         slug: null,
+        loading: false,
     }),
     async mounted() {
+        this.loading = true;
+
         this.slug = this.$route.params.slug;
 
         await this.fetchMenuGroup(this.slug);
@@ -89,7 +93,9 @@ export default {
                 slug: this.slug
             }
         });
-    }   ,
+
+        this.loading = false;
+    },
     methods: {
         ...mapActions([
             'fetchMenuGroup',
@@ -105,6 +111,11 @@ export default {
             await this.deleteEvent(id);
             let events = await this.getEvents(this.slug);
             this.events = events.data;
+
+            this.$toast.open({
+                message: 'Подія видалена!',
+                type: 'default',
+            });
         },
         format(dataTime) {
             let date = parseISO(dataTime, 'yyyy-MM-dd HH:mm:ss', new Date());

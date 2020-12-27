@@ -4,8 +4,11 @@
             <v-col
                 cols="12"
             >
+                <h3 v-if="!events.length" class="text-center mt-15">
+                    Важливих подій поки не має!
+                </h3>
                 <v-alert
-                    v-if="events"
+                    v-else
                     v-for="event in events"
                     :type="new Date(event.expire_at) < new Date() ? 'error' : 'success'"
                     prominent
@@ -39,9 +42,6 @@
                         </v-col>
                     </v-row>
                 </v-alert>
-                <span v-else>
-                    Подій поки не має!
-                </span>
             </v-col>
         </v-row>
     </div>

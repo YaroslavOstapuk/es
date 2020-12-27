@@ -4,6 +4,7 @@ export default {
         title: null,
         subtitle: null,
         appBarTitle: null,
+        activeGroupSlug: null,
         createButtonTitle: null,
         createButtonUrl: null,
     },
@@ -19,6 +20,9 @@ export default {
         },
         setAppBarTitle(state, title) {
             state.appBarTitle = title;
+        },
+        setActiveGroupSlug(state, payload) {
+            state.activeGroupSlug = payload;
         },
         setCreateButtonTitle(state, title) {
             state.createButtonTitle = title;
@@ -38,6 +42,9 @@ export default {
         getTitle(state) {
             return state.title;
         },
+        getActiveGroupSlug(state) {
+            return state.activeGroupSlug;
+        },
         getSubtitle(state) {
             return state.subtitle;
         },
@@ -52,6 +59,10 @@ export default {
         }
     },
     actions: {
+        groupSlug({commit, dispatch}, payload) {
+            commit('setActiveGroupSlug', payload);
+        },
+
         async fetchMenuItem({commit, dispatch}) {
             try {
                 let groups = await axios.get(`${process.env.MIX_APP_URL}/api/v1/groups`);

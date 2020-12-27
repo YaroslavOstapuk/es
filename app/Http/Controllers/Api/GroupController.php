@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Api\Traits\StoreImages;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Group\GroupStoreRequest;
+use App\Http\Requests\Group\GroupSubscribeRequest;
 use App\Http\Requests\Group\GroupUpdateRequest;
 use App\Http\Resources\GroupResource;
 use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
@@ -79,13 +81,55 @@ class GroupController extends Controller
     {
         $query = $request->q;
 
-        if (!$query) {
+        if (!$query || strlen($query) < 2) {
             return;
         }
 
         $groups = Group::where('name', 'LIKE', '%' . $query . '%')->get();
 
         return GroupResource::collection($groups);
+    }
+
+    /**
+     * @param GroupSubscribeRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function subscribe(GroupSubscribeRequest $request)
+    {
+        $group = Group::with('users')->findOrFail($request->group_id);
+
+        if (!$group->hasUser(Auth::user())) {
+            $group->users()->attach(Auth::user());
+
+            return response()->json([
+                'status' => 'ok'
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error'
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function unSubscribe(Request $request)
+    {
+        $group = Group::with('users')->where('slug', $request->slug)->firstOrFail();
+
+        if ($group->hasUser(Auth::user())) {
+            $group->users()->detach(Auth::user());
+
+            return response()->json([
+                'status' => 'ok'
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error'
+        ]);
     }
 
     /**

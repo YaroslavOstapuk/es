@@ -30,6 +30,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -44,7 +46,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               return _this.fetchMenuItem();
 
             case 2:
-              _this.setAppBarTitle('Події в групі');
+              _this.setAppBarTitle('Новини');
 
               _this.setCreateButtonTitle('Добавити групу');
 
@@ -80,9 +82,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    Останні новини сайту!\n")])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("h3", { staticClass: "text-center mt-15" }, [
+        _vm._v("\n        Останні новини сайту!\n    ")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

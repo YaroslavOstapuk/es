@@ -38,7 +38,13 @@
                     <v-list-item-title>{{ item.name }}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
-
+            <v-list-item
+                :to="{ name: 'groupsSearch' }"
+            >
+                <v-list-item-content>
+                    <v-list-item-title>Пошук групи</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
             <v-list-item
                 :to="{ name: 'groups' }"
             >
@@ -49,7 +55,10 @@
         </v-list>
         <template v-slot:append>
             <div class="pa-2">
-                <v-btn block>
+                <v-btn block class="mb-2" v-if="getActiveGroupSlug" @click="unsubscribe">
+                    Відписатись від групи
+                </v-btn>
+                <v-btn block @click="logout">
                     Вийти
                 </v-btn>
             </div>
@@ -58,7 +67,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     props: {
@@ -69,9 +78,38 @@ export default {
         ...mapGetters([
             'items',
             'getTitle',
-            'getSubtitle'
+            'getSubtitle',
+            'getActiveGroupSlug',
         ])
     },
+    methods: {
+        ...mapActions(['unsubscribeFromGroup', 'logoutInApp']),
+
+        async unsubscribe() {
+            let unsubscribe = await this.unsubscribeFromGroup({
+                slug: this.getActiveGroupSlug
+            })
+
+            if (unsubscribe.status == 'ok') {
+                this.$toast.open('Ви відписались від групи!', {
+                    position: 'top-right',
+                    type: 'default',
+                });
+
+                this.$router.push({ name: 'groups' });
+            }
+        },
+        async logout() {
+            await this.logoutInApp();
+
+            this.$toast.open('Ви вийшли з системи!', {
+                position: 'top-right',
+                type: 'info',
+            });
+
+            this.$router.push({ name: 'home' });
+        }
+    }
 }
 </script>
 
