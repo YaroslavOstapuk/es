@@ -102637,6 +102637,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2, null, [[1, 8]]);
       }))();
+    },
+    getAnswers: function getAnswers(_ref3, payload) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var commit, dispatch, questions;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                commit = _ref3.commit, dispatch = _ref3.dispatch;
+                _context3.prev = 1;
+                _context3.next = 4;
+                return axios.get("".concat("http://es.test", "/api/v1/questions/").concat(payload, "/answers"));
+
+              case 4:
+                questions = _context3.sent;
+                return _context3.abrupt("return", questions.data);
+
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](1);
+                commit('setError', _context3.t0);
+
+              case 11:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[1, 8]]);
+      }))();
     }
   }
 });

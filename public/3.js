@@ -96,11 +96,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      messages: [{
-        content: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum  lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum  lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum ",
-        me: true,
-        created_at: "11:11am"
-      }],
+      messages: [],
       message: {
         text: ""
       }
@@ -110,14 +106,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var answers;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return _this.fetchMenuGroup();
+              return _this.fetchMenuGroup(_this.$route.params.slug);
 
             case 2:
+              _context.next = 4;
+              return _this.getAnswers(_this.$route.params.id);
+
+            case 4:
+              answers = _context.sent;
+              _this.messages = answers.data;
+
               _this.setAppBarTitle('Новини');
 
               _this.setCreateButtonTitle('Добавити групу');
@@ -126,7 +130,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 name: 'groupsAdd'
               });
 
-            case 5:
+            case 9:
             case "end":
               return _context.stop();
           }
@@ -134,7 +138,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, _callee);
     }))();
   },
-  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['fetchMenuGroup'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapMutations"])(['setAppBarTitle', 'setCreateButtonTitle', 'setCreateButtonUrl'])), {}, {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    user: 'currentUser'
+  })),
+  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['fetchMenuGroup', 'getAnswers'])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapMutations"])(['setAppBarTitle', 'setCreateButtonTitle', 'setCreateButtonUrl'])), {}, {
     clearMessage: function clearMessage() {
       this.message.text = '';
     },
@@ -156,7 +163,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.custom-chip-style {\n    padding: 10px;\n    height: auto !important;\n    white-space: normal;\n    max-width: 400px;\n}\n", ""]);
+exports.push([module.i, "\n.custom-chip-style {\n    padding: 10px;\n    height: auto !important;\n    white-space: normal;\n    max-width: 400px;\n}\n.file_loader {\n    padding: 0px;\n    margin: 0px;\n    flex: unset;\n}\n", ""]);
 
 // exports
 
@@ -241,7 +248,8 @@ var render = function() {
                             "div",
                             {
                               class: {
-                                "d-flex flex-row-reverse align-center": msg.me
+                                "d-flex flex-row-reverse align-center":
+                                  _vm.user.id === msg.user.id
                               }
                             },
                             [
@@ -257,8 +265,7 @@ var render = function() {
                                           _c("v-avatar", [
                                             _c("img", {
                                               attrs: {
-                                                src:
-                                                  "https://cdn.vuetifyjs.com/images/john.jpg",
+                                                src: msg.user.main_photo.avatar,
                                                 alt: "John"
                                               }
                                             })
@@ -272,7 +279,7 @@ var render = function() {
                                             [
                                               _vm._v(
                                                 "\n                                        " +
-                                                  _vm._s(msg.content) +
+                                                  _vm._s(msg.message) +
                                                   "\n                                        "
                                               ),
                                               _c(
@@ -306,7 +313,10 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-col",
-                    { staticClass: "d-flex", attrs: { cols: "8", sm: "5" } },
+                    {
+                      staticClass: "d-flex align-center",
+                      attrs: { cols: "8", sm: "5" }
+                    },
                     [
                       _c("v-text-field", {
                         attrs: {
@@ -329,15 +339,13 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("v-file-input", {
-                        attrs: {
-                          "hide-input": "",
-                          multiple: "",
-                          "truncate-length": "15"
-                        }
+                        staticClass: "file_loader",
+                        attrs: { "hide-input": "", multiple: "" }
                       }),
                       _vm._v(" "),
                       _c(
                         "v-btn",
+                        { on: { click: _vm.sendMessage } },
                         [
                           _c("v-icon", [
                             _vm._v(
