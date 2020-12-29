@@ -1,6 +1,7 @@
 <template>
     <v-row class="no-gutters elevation-4">
-        <v-col
+        <loader v-if="loader"></loader>
+        <v-col v-else
             cols="auto"
             class="flex-grow-1 flex-shrink-0"
         >
@@ -14,7 +15,7 @@
                     <v-card-title>
                         Тема чату
                     </v-card-title>
-                    <v-card-text class="flex-grow-1 overflow-y-auto">
+                    <v-card-text class="flex-grow-1 overflow-y-auto" ref="block">
                         <template v-for="(msg, i) in messages">
                             <div :class="{ 'd-flex flex-row-reverse align-center': user.id === msg.user.id }">
                                 <v-menu offset-y>
@@ -54,7 +55,7 @@
                             hide-input
                             multiple
                         ></v-file-input>
-                        <v-btn @click="sendMessage">
+                        <v-btn @click="sendMessage" :loading="loading">
                             <v-icon>
                                 mdi-send
                             </v-icon>
@@ -71,21 +72,30 @@ import {mapActions, mapMutations, mapGetters} from 'vuex'
 
 export default {
     data: () => ({
+        loader: false,
+        loading: false,
         messages: [],
         message: {
             text: "",
         }
     }),
+    watch: {
+        messages() {
+            setTimeout(() => {
+                console.log(this.$refs.block.scrollTop);
+                this.$refs.block.scrollTop = this.$refs.block.scrollHeight;
+            });
+        }
+    },
     async mounted() {
+        this.loader = true;
         await this.fetchMenuGroup(this.$route.params.slug);
         let answers = await this.getAnswers(this.$route.params.id);
         this.messages = answers.data;
 
-        this.setAppBarTitle('Новини');
-        this.setCreateButtonTitle('Добавити групу');
-        this.setCreateButtonUrl({
-            name: 'groupsAdd'
-        });
+        this.setAppBarTitle('Питання');
+        this.setCreateButtonTitle('');
+        this.loader = false;
     },
     computed: {
         ...mapGetters({
@@ -95,7 +105,8 @@ export default {
     methods: {
         ...mapActions([
             'fetchMenuGroup',
-            'getAnswers'
+            'getAnswers',
+            'sendAnswers',
         ]),
         ...mapMutations([
             'setAppBarTitle',
@@ -105,8 +116,20 @@ export default {
         clearMessage() {
             this.message.text = ''
         },
-        sendMessage() {
-
+        async sendMessage() {
+            if (this.message.text) {
+                this.loading = true;
+                await this.sendAnswers({
+                    id: this.$route.params.id,
+                    data: {
+                        message: this.message.text
+                    }
+                });
+                this.message.text = '';
+                let answers = await this.getAnswers(this.$route.params.id);
+                this.messages = answers.data;
+                this.loading = false;
+            }
         }
     }
 }

@@ -5,7 +5,10 @@
             <v-col
             cols="12"
             >
-            <v-card>
+                <h3 v-if="!questions.length" class="text-center mt-15">
+                    Запитання поки ніхто незадав!
+                </h3>
+                <v-card v-else>
                 <v-list
                 two-line
                 >

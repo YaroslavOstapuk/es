@@ -45,6 +45,15 @@ export default {
             } catch (error) {
                 commit('setError', error);
             }
+        },
+        async sendAnswers({commit, dispatch}, payload) {
+            try {
+                let message = await axios.post(`${process.env.MIX_APP_URL}/api/v1/questions/${payload.id}/answers/`, payload.data);
+
+                return message.data.data;
+            } catch (error) {
+                commit('setError', error);
+            }
         }
     }
 }

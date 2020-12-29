@@ -89,6 +89,11 @@ export default {
                 data: formData
             });
 
+            this.$toast.open('Запитання створено!', {
+                position: 'top-right',
+                type: 'success'
+            });
+
             this.loading = false;
         }
     },

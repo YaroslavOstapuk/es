@@ -22,7 +22,6 @@ class AnswerController extends Controller
     {
         $answers = Answer::with('user', 'media')
             ->whereQuestionId($question->id)
-            ->orderByDesc('created_at')
             ->get();
 
         return AnswerResource::collection($answers);

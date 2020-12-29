@@ -83,14 +83,13 @@ export default {
             formData.append('slug', this.form.slug ? this.form.slug : '');
             formData.append('main_photo', this.form.main_photo ? this.form.main_photo : '');
 
-            this.$toast.open('Група успішно створена!', {
-                position: 'top-right',
-                type: 'success'
-            });
-
             const group = await this.storeGroup(formData);
 
             if (group) {
+                this.$toast.open('Група успішно створена!', {
+                    position: 'top-right',
+                    type: 'success'
+                });
                 this.$router.push({ name: 'groupsEdit', params: { slug: group.data.slug } });
             }
 
