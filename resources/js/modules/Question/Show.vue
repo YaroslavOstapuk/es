@@ -4,6 +4,7 @@
         <v-col v-else
             cols="auto"
             class="flex-grow-1 flex-shrink-0"
+            ref="block"
         >
             <v-responsive
                 class="overflow-y-hidden fill-height"
@@ -15,7 +16,7 @@
                     <v-card-title>
                         Тема чату
                     </v-card-title>
-                    <v-card-text class="flex-grow-1 overflow-y-auto" ref="block">
+                    <v-card-text class="flex-grow-1 overflow-y-auto">
                         <template v-for="(msg, i) in messages">
                             <div :class="{ 'd-flex flex-row-reverse align-center': user.id === msg.user.id }">
                                 <v-menu offset-y>
@@ -29,12 +30,10 @@
                                         <v-chip
                                             class="custom-chip-style"
                                         >
-                                            {{ msg.message }}
-                                            <sub
-                                                class="ml-2"
-                                                style="font-size: 0.5rem;"
-                                            >{{ msg.created_at }}</sub>
+                                            <span>{{ msg.user.name }}</span>
+                                            <p>{{ msg.message }}</p>
                                         </v-chip>
+                                        <span>10:49</span>
                                     </template>
                                 </v-menu>
                             </div>
@@ -82,8 +81,7 @@ export default {
     watch: {
         messages() {
             setTimeout(() => {
-                console.log(this.$refs.block.scrollTop);
-                this.$refs.block.scrollTop = this.$refs.block.scrollHeight;
+                window.scrollTo(0,document.body.scrollHeight);
             });
         }
     },
@@ -137,6 +135,7 @@ export default {
 
 <style>
 .custom-chip-style {
+    margin-top: 5px;
     padding: 10px;
     height: auto !important;
     white-space: normal;
@@ -146,5 +145,13 @@ export default {
     padding: 0px;
     margin: 0px;
     flex: unset;
+}
+.custom-chip-style .v-chip__content {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+.custom-chip-style .v-chip__content p {
+    margin-bottom: 0;
 }
 </style>
