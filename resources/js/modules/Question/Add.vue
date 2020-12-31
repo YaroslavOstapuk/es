@@ -89,6 +89,14 @@ export default {
                 data: formData
             });
 
+            this.$router.push({
+                name: 'questionsShow',
+                params: {
+                    slug: this.$route.params.slug,
+                    id: question.data.id
+                }
+            })
+
             this.$toast.open('Запитання створено!', {
                 position: 'top-right',
                 type: 'success'

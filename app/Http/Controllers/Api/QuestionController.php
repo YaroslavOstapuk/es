@@ -7,8 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Question\QuestionStoreRequest;
 use App\Http\Requests\Question\QuestionUpdateRequest;
 use App\Http\Resources\QuestionResource;
+use App\Http\Resources\QuestionSimpleResource;
 use App\Models\Group;
 use App\Models\Question;
+use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
@@ -22,7 +24,7 @@ class QuestionController extends Controller
     {
         $questions = Question::with('media', 'user')->whereGroupId($group->id)->orderByDesc('created_at')->get();
 
-        return QuestionResource::collection($questions);
+        return QuestionSimpleResource::collection($questions);
     }
 
     /**
@@ -43,6 +45,20 @@ class QuestionController extends Controller
         $this->storePhotos($request, $question);
 
         $question->load('user', 'media');
+
+        return new QuestionResource($question);
+    }
+
+    /**
+     * @param Request $request
+     * @param Question $question
+     * @return QuestionResource
+     */
+    public function changeStatus(Request $request, Question $question)
+    {
+        $question->update([
+            'status' => $request->status,
+        ]);
 
         return new QuestionResource($question);
     }

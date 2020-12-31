@@ -57,9 +57,18 @@ export default {
         },
         async sendAnswers({commit, dispatch}, payload) {
             try {
-                let message = await axios.post(`${process.env.MIX_APP_URL}/api/v1/questions/${payload.id}/answers/`, payload.data);
+                let message = await axios.post(`${process.env.MIX_APP_URL}/api/v1/questions/${payload.id}/answers`, payload.data);
 
                 return message.data.data;
+            } catch (error) {
+                commit('setError', error);
+            }
+        },
+        async change({commit, dispatch}, payload) {
+            try {
+                let question = await axios.post(`${process.env.MIX_APP_URL}/api/v1/questions/${payload.id}/change`, payload.data);
+
+                return question.data.data;
             } catch (error) {
                 commit('setError', error);
             }

@@ -48,6 +48,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function () {
         Route::apiResource('groups.questions', QuestionController::class)->shallow();
         Route::apiResource('groups.chats', ChatController::class)->shallow();
         Route::apiResource('chats.messages', MessageController::class)->shallow()->except(['show']);
+        Route::post('questions/{question}/change', [QuestionController::class, 'changeStatus']);
         Route::apiResource('questions.answers', AnswerController::class)->shallow();
     });
 });
