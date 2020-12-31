@@ -18,7 +18,7 @@ export const routes = [
         component: () => import('./modules/Group/Add.vue')
     },
     {
-        path: '/groups/search',
+        path: '/search',
         name: 'groupsSearch',
         meta: {layout: 'main'},
         component: () => import('./modules/Group/Search.vue')
@@ -70,5 +70,11 @@ export const routes = [
         name: 'questionsShow',
         meta: {layout: 'main'},
         component: () => import('./modules/Question/Show')
+    },
+    {
+        path: '/users',
+        name: 'usersShow',
+        meta: {layout: 'main'},
+        component: () => import('./modules/User/Show')
     },
 ];

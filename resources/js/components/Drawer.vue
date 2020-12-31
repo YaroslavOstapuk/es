@@ -39,6 +39,13 @@
                 </v-list-item-content>
             </v-list-item>
             <v-list-item
+                :to="{ name: 'groups' }"
+            >
+                <v-list-item-content>
+                    <v-list-item-title>Мої групи</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+            <v-list-item
                 :to="{ name: 'groupsSearch' }"
             >
                 <v-list-item-content>
@@ -46,10 +53,10 @@
                 </v-list-item-content>
             </v-list-item>
             <v-list-item
-                :to="{ name: 'groups' }"
+                :to="{ name: 'usersShow' }"
             >
                 <v-list-item-content>
-                    <v-list-item-title>Мої групи</v-list-item-title>
+                    <v-list-item-title>Моя сторінка</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
         </v-list>

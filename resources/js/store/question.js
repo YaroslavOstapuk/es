@@ -37,6 +37,15 @@ export default {
                 commit('setError', error);
             }
         },
+        async getQuestion({commit, dispatch}, payload) {
+            try {
+                let question = await axios.get(`${process.env.MIX_APP_URL}/api/v1/questions/${payload}`);
+
+                return question.data.data;
+            } catch (error) {
+                commit('setError', error);
+            }
+        },
         async getAnswers({commit, dispatch}, payload) {
             try {
                 let questions = await axios.get(`${process.env.MIX_APP_URL}/api/v1/questions/${payload}/answers`);

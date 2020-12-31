@@ -13,9 +13,20 @@
                     flat
                     class="d-flex flex-column fill-height"
                 >
-                    <v-card-title>
-                        Тема чату
-                    </v-card-title>
+                    <div v-if="question">
+                        <v-card-title>
+                            {{ question.title }}
+                        </v-card-title>
+
+                        <v-card-text>
+                            {{ question.descriptions }}
+                        </v-card-text>
+
+                        <p v-for="photo in question.photos" class="add-photos">
+                            <a :href="photo.url" target="_blank">{{ photo.name }}</a>
+                        </p>
+                    </div>
+
                     <v-card-text class="flex-grow-1 overflow-y-auto">
                         <template v-for="(msg, i) in messages">
                             <div :class="{ 'd-flex flex-row-reverse align-center': user.id === msg.user.id }">
@@ -30,10 +41,10 @@
                                         <v-chip
                                             class="custom-chip-style"
                                         >
-                                            <span>{{ msg.user.name }}</span>
-                                            <p>{{ msg.message }}</p>
+                                            <span class="custom-chip-name">{{ msg.user.name }}</span>
+                                            <p class="custom-chip-message">{{ msg.message }}</p>
                                         </v-chip>
-                                        <span>10:49</span>
+                                        <span class="custom-chip-time">10:49</span>
                                     </template>
                                 </v-menu>
                             </div>
@@ -73,6 +84,7 @@ export default {
     data: () => ({
         loader: false,
         loading: false,
+        question: [],
         messages: [],
         message: {
             text: "",
@@ -90,6 +102,7 @@ export default {
         await this.fetchMenuGroup(this.$route.params.slug);
         let answers = await this.getAnswers(this.$route.params.id);
         this.messages = answers.data;
+        this.question = await this.getQuestion(this.$route.params.id);
 
         this.setAppBarTitle('Питання');
         this.setCreateButtonTitle('');
@@ -105,6 +118,7 @@ export default {
             'fetchMenuGroup',
             'getAnswers',
             'sendAnswers',
+            'getQuestion',
         ]),
         ...mapMutations([
             'setAppBarTitle',
@@ -135,6 +149,7 @@ export default {
 
 <style>
 .custom-chip-style {
+    background: #e0e0e05e !important;
     margin-top: 5px;
     padding: 10px;
     height: auto !important;
@@ -153,5 +168,18 @@ export default {
 }
 .custom-chip-style .v-chip__content p {
     margin-bottom: 0;
+}
+.custom-chip-time {
+    margin: 0 5px;
+}
+.custom-chip-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.custom-chip-message {
+    font-size: 16px;
+}
+.add-photos {
+    padding: 0 16px;
 }
 </style>

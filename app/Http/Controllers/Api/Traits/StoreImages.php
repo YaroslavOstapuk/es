@@ -20,6 +20,18 @@ trait StoreImages
 
     /**
      * @param $request
+     */
+    public function storeNewPhoto($request, $model)
+    {
+        if ($request->new_photo) {
+            $model->clearMediaCollection('main_photo');
+
+            $model->addMedia($request->new_photo)->toMediaCollection('main_photo');
+        }
+    }
+
+    /**
+     * @param $request
      * @param $model
      */
     public static function storePhotos($request, $model)

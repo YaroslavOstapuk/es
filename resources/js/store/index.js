@@ -3,6 +3,7 @@ import auth from "./auth";
 import group from "./group";
 import event from "./event";
 import question from "./question";
+import user from "./user";
 
 export default {
     state: {
@@ -23,5 +24,6 @@ export default {
         group,
         event,
         question,
+        user,
     }
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\AnswerController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\MessageController;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,10 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function () {
         Route::post('refresh', [LoginController::class, 'refresh']);
         Route::post('register', [RegisterController::class, 'register']);
     });
+
+    Route::get('me', [UserController::class, 'me']);
+    Route::post('me', [UserController::class, 'updateUserData']);
+
     Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
 
