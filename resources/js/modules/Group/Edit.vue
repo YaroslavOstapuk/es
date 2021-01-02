@@ -19,6 +19,9 @@
                     label="Слаг"
                     :error-messages="errors ? errors.slug : ''"
                 ></v-text-field>
+                <div class="main-photo" v-if="form.photo && !form.main_photo">
+                    <img :src="form.photo" alt="">
+                </div>
                 <v-file-input
                     v-model="form.main_photo"
                     accept="image/*"
@@ -54,6 +57,7 @@ export default {
             description: null,
             slug: null,
             main_photo: null,
+            photo: null,
         }
     }),
     async mounted() {
@@ -65,6 +69,7 @@ export default {
         this.form.name = group.data.name;
         this.form.description = group.data.description;
         this.form.slug = group.data.slug;
+        this.form.photo = group.data.main_photo.avatar;
     },
     computed: {
         ...mapGetters({
@@ -93,6 +98,11 @@ export default {
             const group = await this.updateGroup({
                 slug: this.$route.params.slug,
                 data: formData
+            });
+
+            this.$toast.open({
+                message: 'Дані оновлено!',
+                type: 'info',
             });
 
             this.loading = false;

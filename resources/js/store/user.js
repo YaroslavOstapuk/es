@@ -34,6 +34,15 @@ export default {
                     commit('setError', error);
                 }
             }
+        },
+        async getUsers({commit, dispatch}, payload) {
+            try {
+                let users = await axios.get(`${process.env.MIX_APP_URL}/api/v1/groups/${payload}/users`);
+
+                return users.data.data;
+            } catch (error) {
+                commit('setError', error);
+            }
         }
     }
 }

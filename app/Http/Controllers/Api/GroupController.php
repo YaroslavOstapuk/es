@@ -8,6 +8,8 @@ use App\Http\Requests\Group\GroupStoreRequest;
 use App\Http\Requests\Group\GroupSubscribeRequest;
 use App\Http\Requests\Group\GroupUpdateRequest;
 use App\Http\Resources\GroupResource;
+use App\Http\Resources\UserResource;
+use App\Models\Chat;
 use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -44,6 +46,13 @@ class GroupController extends Controller
 
         $this->storeMainPhoto($request, $group);
 
+        $primaryChat = Chat::create([
+            'name' => 'Загальний чат',
+            'description' => 'Чат для всіх учасників цієї групи',
+            'group_id' => $group->id,
+            'type' => 'primary',
+        ]);
+
         return new GroupResource($group);
     }
 
@@ -54,6 +63,15 @@ class GroupController extends Controller
     public function show(Group $group)
     {
         return new GroupResource($group);
+    }
+
+    /**
+     * @param Group $group
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function users(Group $group)
+    {
+        return UserResource::collection($group->users);
     }
 
     /**

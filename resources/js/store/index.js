@@ -4,6 +4,7 @@ import group from "./group";
 import event from "./event";
 import question from "./question";
 import user from "./user";
+import chats from "./chats";
 
 export default {
     state: {
@@ -25,5 +26,6 @@ export default {
         event,
         question,
         user,
+        chats,
     }
 }

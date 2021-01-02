@@ -18,6 +18,7 @@ class CreateChatsTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->unsignedBigInteger('group_id');
+            $table->string('type')->default('other');
             $table->timestamps();
 
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');

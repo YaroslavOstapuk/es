@@ -72,9 +72,33 @@ export const routes = [
         component: () => import('./modules/Question/Show')
     },
     {
+        path: '/groups/:slug/users',
+        name: 'usersList',
+        meta: {layout: 'main'},
+        component: () => import('./modules/User/List')
+    },
+    {
+        path: '/groups/:slug/settings',
+        name: 'groupsSetting',
+        meta: {layout: 'main'},
+        component: () => import('./modules/Settings/Show')
+    },
+    {
         path: '/users',
         name: 'usersShow',
         meta: {layout: 'main'},
         component: () => import('./modules/User/Show')
+    },
+    {
+        path: '/groups/:slug/chats/add',
+        name: 'chatsAdd',
+        meta: {layout: 'main'},
+        component: () => import('./modules/Chats/Add')
+    },
+    {
+        path: '/groups/:slug/chats/:id',
+        name: 'chatsShow',
+        meta: {layout: 'main'},
+        component: () => import('./modules/Chats/Show')
     },
 ];

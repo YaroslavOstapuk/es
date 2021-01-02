@@ -18,8 +18,10 @@ class MessageResource extends JsonResource
             'id' => $this->id,
             'message' => $this->message,
             'chat_id' => $this->chat_id,
-            'sender' => new UserResource($this->whenLoaded('sender')),
+            'user' => new UserResource($this->whenLoaded('sender')),
             'photos' => Media::collection($this->whenLoaded('media')),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at
         ];
     }
 }

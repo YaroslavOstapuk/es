@@ -53,7 +53,10 @@ export default {
         }
     }),
     async mounted() {
-        await this.fetchMenuGroup(this.$route.params.slug);
+        await this.fetchMenuGroup({
+            update: false,
+            slug: this.$route.params.slug,
+        });
         this.setAppBarTitle('Добавити запитання');
         this.clearCreateButtonInfo();
     },
@@ -97,7 +100,8 @@ export default {
                 }
             })
 
-            this.$toast.open('Запитання створено!', {
+            this.$toast.open({
+                message: 'Запитання створено!',
                 position: 'top-right',
                 type: 'success'
             });

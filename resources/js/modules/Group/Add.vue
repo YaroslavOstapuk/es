@@ -86,7 +86,8 @@ export default {
             const group = await this.storeGroup(formData);
 
             if (group) {
-                this.$toast.open('Група успішно створена!', {
+                this.$toast.open({
+                    message: 'Група успішно створена!',
                     position: 'top-right',
                     type: 'success'
                 });

@@ -89,7 +89,16 @@ export default {
                 commit('setError', error)
             }
         },
-        async fetchMenuGroup({commit, dispatch}, slug) {
+        async fetchMenuGroup({commit, dispatch}, payload) {
+
+            if (!payload.update && this.getters['items'].length) {
+                return;
+            }
+
+            let primaryChat = await dispatch('primaryChat', payload.slug);
+
+            let chats = await dispatch('getOtherChat', payload.slug);
+
             commit('setTitle', 'Група');
             let items = [];
 
@@ -100,7 +109,7 @@ export default {
                     route: {
                         name: 'eventsList',
                         params: {
-                            slug: slug
+                            slug: payload.slug
                         }
                     }
                 },
@@ -110,11 +119,64 @@ export default {
                     route: {
                         name: 'questionsList',
                         params: {
-                            slug: slug
+                            slug: payload.slug
+                        }
+                    }
+                },
+                {
+                    name: 'Загальний чат',
+                    icon: 'mdi-chat',
+                    route: {
+                        name: 'chatsShow',
+                        params: {
+                            slug: payload.slug,
+                            id: primaryChat.id,
                         }
                     }
                 },
             ]
+
+            let chatsInMenu = [];
+
+            if (chats.length) {
+                chats.forEach(function (item) {
+                    chatsInMenu.push({
+                        name: item.name,
+                        icon: 'mdi-chat',
+                        route: {
+                            name: 'chatsShow',
+                            params: {
+                                slug: payload.slug,
+                                id: item.id,
+                            }
+                        }
+                    });
+                });
+            }
+
+            items = items.concat(chatsInMenu);
+
+            items.push({
+                name: 'Учасники',
+                icon: 'mdi-account-circle',
+                route: {
+                    name: 'usersList',
+                    params: {
+                        slug: payload.slug
+                    }
+                }
+            });
+
+            items.push({
+                name: 'Налаштування',
+                icon: 'mdi-settings',
+                route: {
+                    name: 'groupsSetting',
+                    params: {
+                        slug: payload.slug
+                    }
+                }
+            });
 
             commit('setItems', items);
         }

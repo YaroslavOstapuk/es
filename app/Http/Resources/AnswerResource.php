@@ -20,6 +20,8 @@ class AnswerResource extends JsonResource
             'question_id' => $this->question_id,
             'user' => new UserResource($this->whenLoaded('user')),
             'photos' => Media::collection($this->whenLoaded('media')),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at
         ];
     }
 }

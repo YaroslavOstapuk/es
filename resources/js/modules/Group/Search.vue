@@ -87,7 +87,8 @@ export default {
             });
 
             if (subscribe.status == 'ok') {
-                this.$toast.open('Ви успішно підписались!', {
+                this.$toast.open({
+                    message: 'Ви успішно підписались!',
                     position: 'top-right',
                     type: 'success'
                 });

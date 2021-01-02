@@ -78,7 +78,10 @@ export default {
 
         this.slug = this.$route.params.slug;
 
-        await this.fetchMenuGroup(this.slug);
+        await this.fetchMenuGroup({
+            update: false,
+            slug: this.slug,
+        });
         let events = await this.getEvents(this.slug);
 
         if (events) {

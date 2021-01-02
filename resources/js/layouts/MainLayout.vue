@@ -48,4 +48,7 @@ export default {
 }
 </script>
 <style>
+.v-toast__item--success {
+    background-color: #269f08 !important;
+}
 </style>

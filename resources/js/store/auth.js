@@ -88,8 +88,8 @@ export default {
         },
         async logoutInApp({commit, dispatch}, payload) {
             try {
-                commit('logout');
                 await axios.post(`${process.env.MIX_APP_URL}/api/v1/auth/logout`);
+                commit('logout');
             }catch (error) {
                 commit('error', error);
             }

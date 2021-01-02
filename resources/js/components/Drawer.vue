@@ -98,9 +98,10 @@ export default {
             })
 
             if (unsubscribe.status == 'ok') {
-                this.$toast.open('Ви відписались від групи!', {
+                this.$toast.open({
+                    message: 'Ви відписались від групи!',
                     position: 'top-right',
-                    type: 'default',
+                    type: 'success',
                 });
 
                 this.$router.push({ name: 'groups' });
@@ -109,9 +110,10 @@ export default {
         async logout() {
             await this.logoutInApp();
 
-            this.$toast.open('Ви вийшли з системи!', {
-                position: 'top-right',
-                type: 'info',
+            this.$toast.open({
+                message: 'Ви вийшли з системи!',
+                position: 'bottom-right',
+                type: 'success',
             });
 
             this.$router.push({ name: 'home' });

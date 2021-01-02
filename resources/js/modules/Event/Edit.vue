@@ -76,7 +76,10 @@ export default {
     }),
     async mounted() {
         this.loader = true;
-        await this.fetchMenuGroup(this.$route.params.slug);
+        await this.fetchMenuGroup({
+            update: false,
+            slug: this.$route.params.slug,
+        });
         this.setAppBarTitle('Редагувати подію');
         this.clearCreateButtonInfo();
 

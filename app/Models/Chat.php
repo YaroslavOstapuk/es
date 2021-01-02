@@ -14,6 +14,7 @@ class Chat extends Model implements HasMedia
     protected $fillable = [
         'name',
         'description',
-        'group_id'
+        'group_id',
+        'type',
     ];
 }

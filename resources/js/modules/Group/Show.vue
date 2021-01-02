@@ -64,7 +64,10 @@ export default {
         let events = await this.getEvents(slug);
         this.events = events.data;
 
-        await this.fetchMenuGroup(slug);
+        await this.fetchMenuGroup({
+            update: true,
+            slug: slug,
+        });
 
         this.setAppBarTitle(`Група "${this.group.name}"`);
         this.clearCreateButtonInfo();

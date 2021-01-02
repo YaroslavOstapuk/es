@@ -63,7 +63,7 @@
                                                 </a>
                                             </span>
                                         </v-chip>
-                                        <span class="custom-chip-time">10:49</span>
+                                        <span class="custom-chip-time">{{ format(msg.created_at) }}</span>
                                     </template>
                                 </v-menu>
                             </div>
@@ -100,6 +100,7 @@
 
 <script>
 import {mapActions, mapMutations, mapGetters} from 'vuex'
+import {format, parseISO} from 'date-fns'
 
 export default {
     data: () => ({
@@ -127,7 +128,11 @@ export default {
     },
     async mounted() {
         this.loader = true;
-        await this.fetchMenuGroup(this.$route.params.slug);
+        await this.fetchMenuGroup({
+            update: false,
+            slug: this.$route.params.slug,
+        });
+
         let answers = await this.getAnswers(this.$route.params.id);
         this.messages = answers.data;
         let question = await this.getQuestion(this.$route.params.id);
@@ -178,6 +183,7 @@ export default {
                 });
 
                 this.message.text = '';
+                this.photos = [];
                 let answers = await this.getAnswers(this.$route.params.id);
                 this.messages = answers.data;
                 this.loading = false;
@@ -199,10 +205,16 @@ export default {
                     status: this.getStatusId(this.status),
                 }
             });
-            this.$toast.open('Статус оновлено!', {
+            this.$toast.open({
+                message: 'Статус оновлено!',
                 position: 'top-right',
                 type: 'success'
             });
+        },
+        format(dataTime) {
+            let date = parseISO(dataTime, 'yyyy-MM-dd HH:mm:ss', new Date());
+
+            return format(date, 'HH:mm');
         }
     }
 }

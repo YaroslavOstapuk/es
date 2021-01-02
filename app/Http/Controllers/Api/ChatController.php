@@ -17,9 +17,20 @@ class ChatController extends Controller
      */
     public function index(Group $group)
     {
-        $chats = Chat::whereGroupId($group->id)->get();
+        $chats = Chat::whereGroupId($group->id)->whereType('other')->get();
 
         return ChatResource::collection($chats);
+    }
+
+    /**
+     * @param Group $group
+     * @return ChatResource
+     */
+    public function getPrimaryChat(Group $group)
+    {
+        $chat = Chat::whereGroupId($group->id)->whereType('primary')->first();
+
+        return new ChatResource($chat);
     }
 
     /**

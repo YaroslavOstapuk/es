@@ -75,7 +75,10 @@ export default {
     }),
     async mounted() {
         this.loader = true;
-        await this.fetchMenuGroup(this.$route.params.slug);
+        await this.fetchMenuGroup({
+            update: false,
+            slug: this.$route.params.slug,
+        });
         this.setAppBarTitle('Добавити подію');
         this.clearCreateButtonInfo();
         this.loader = false;
@@ -103,7 +106,8 @@ export default {
             })
 
             if (event) {
-                this.$toast.open('Подія успішно створена!', {
+                this.$toast.open({
+                    message: 'Подія успішно створена!',
                     position: 'top-right',
                     type: 'success'
                 });

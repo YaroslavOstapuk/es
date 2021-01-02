@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\AnswerController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\InvitationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,12 +44,15 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function () {
         Route::post('groups/unsubscribe', [GroupController::class, 'unSubscribe']);
         Route::post('groups/subscribe', [GroupController::class, 'subscribe']);
         Route::get('groups/search', [GroupController::class, 'searchGroup']);
+        Route::get('groups/{group}/users', [GroupController::class, 'users']);
         Route::apiResource('groups', GroupController::class);
         Route::apiResource('groups.events', EventController::class)->shallow();
         Route::apiResource('groups.questions', QuestionController::class)->shallow();
+        Route::get('groups/{group}/primary-chat', [ChatController::class, 'getPrimaryChat']);
         Route::apiResource('groups.chats', ChatController::class)->shallow();
         Route::apiResource('chats.messages', MessageController::class)->shallow()->except(['show']);
         Route::post('questions/{question}/change', [QuestionController::class, 'changeStatus']);
         Route::apiResource('questions.answers', AnswerController::class)->shallow();
+        Route::post('invitation', [InvitationController::class, 'invitation']);
     });
 });
